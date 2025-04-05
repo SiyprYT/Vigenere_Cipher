@@ -1,27 +1,37 @@
 #Tristan Le - 3/04/2025
 
-def decryption(ciphertext, keyword):
-    # Remove spaces and convert both ciphertext and keyword to lowercase for consistency
-    ciphertext = ciphertext.replace(" ", "").lower()
-    keyword = keyword.replace(" ", "").lower()
+def decryption(plainText, keyword):
+    cipherText = []  # store characters
+    keyword_index = 0  # track position of the thingy
     
-    plaintext = []  # List to store the decrypted characters
-    keyword_index = 0  # Index to track the position in the keyword
+    print("")
+    print("You chose to...")
+    print(" ")
+    print("██████╗░███████╗░█████╗░██████╗░██╗░░░██╗██████╗░████████╗")
+    print("██╔══██╗██╔════╝██╔══██╗██╔══██╗╚██╗░██╔╝██╔══██╗╚══██╔══╝")
+    print("██║░░██║█████╗░░██║░░╚═╝██████╔╝░╚████╔╝░██████╔╝░░░██║░░░")
+    print("██║░░██║██╔══╝░░██║░░██╗██╔══██╗░░╚██╔╝░░██╔═══╝░░░░██║░░░")
+    print("██████╔╝███████╗╚█████╔╝██║░░██║░░░██║░░░██║░░░░░░░░██║░░░")
+    print("╚═════╝░╚══════╝░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░░░░╚═╝░░░")
+    print(" ")
     
-    for char in ciphertext:
-        # all it does is check if the current character is a letter
-        if char.isalpha(): 
+    #once again, i did NOT steal this from the code i made 2 decades ago
+    
+    for char in plainText:
+        key_char = keyword[keyword_index % len(keyword)]  # if user makes the keyword 3 letters but the message is more, it loops it till it is the same or sum sum
+        
+        if char.isalpha():  # is the character a letter?!?!?!?!?!?
             shift = ord(keyword[keyword_index % len(keyword)]) - ord('a')  # Calculate the shift based on the keyword
-            decrypted_char = chr(((ord(char) - ord('a') - shift) % 26) + ord('a'))  # Apply the reverse shift for letters
-            plaintext.append(decrypted_char)  # Add the decrypted letter to the list
-            keyword_index += 1  # Move to the next character in the keyword
-        elif char.isdigit():  # If the character is a digit (0-9)
-            shift = ord(keyword[keyword_index % len(keyword)]) - ord('a')  # Use the keyword for digit shift as well
-            decrypted_char = chr(((ord(char) - ord('0') - shift) % 10) + ord('0'))  # Apply the reverse shift for numbers
-            plaintext.append(decrypted_char)  # Add the decrypted digit to the list
+            decrypted_char = chr(((ord(char) - ord('a') - shift) % 26) + ord('a'))  # removes encryption (decrypt) thing on character
+            cipherText.append(decrypted_char)  # add character to list
+            keyword_index += 1  # NEXT CHARACTER!
+        elif char.isdigit():  # is the character a number?!?!?!?!?!?
+            shift = ord(keyword[keyword_index % len(keyword)]) - ord('a')  # Use the keyword for number shift as well
+            decrypted_char = chr(((ord(char) - ord('0') - shift) % 10) + ord('0'))  # removes encryption (decrypt) thingy on number
+            cipherText.append(decrypted_char)  # add number to the list
             keyword_index += 1  # Move to the next character in the keyword
         else:
-            # For non-alphabet and non-digit characters (like spaces or punctuation), keep unchanged
-            plaintext.append(char)
+            # if it isnt a letter or number, dont change
+            cipherText.append(char)
     
-    return ''.join(plaintext)  # Convert the list to a string and return the decrypted message
+    return ''.join(cipherText)  # turns the list into string. wow!
